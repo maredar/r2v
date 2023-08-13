@@ -1,0 +1,89 @@
+{
+    "version": 2,
+    "configurePresets": [
+        {
+            "name": "debug",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD_REQUIRED": "20",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
+            }
+        },
+        {
+            "name": "release",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD_REQUIRED": "20"
+            }
+        },
+        {
+            "name": "ninja-generator",
+            "hidden": true,
+            "generator": "Ninja"
+        },
+        {
+            "name": "clang-16",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang-16",
+                "CMAKE_CXX_COMPILER": "clang++-16"
+            }
+        },
+        {
+            "name": "gcc-12",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc-12",
+                "CMAKE_CXX_COMPILER": "g++-12"
+            }
+        },
+        {
+            "name": "gcc-debug",
+            "description": "gcc-12 Debug, Ninja",
+            "binaryDir": "build/gcc-12-ninja-debug",
+            "inherits": [
+                "ninja-generator",
+                "debug",
+                "gcc-12"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-Wall -Werror"
+            }
+        },
+        {
+            "name": "clang-debug",
+            "description": "clang-16 Debug, Ninja",
+            "binaryDir": "build/clang-16-ninja-debug",
+            "inherits": [
+                "ninja-generator",
+                "debug",
+                "clang-16"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-Wall -Werror"
+            }
+        },
+        {
+            "name": "clang-release",
+            "description": "clang-16 Release, Ninja",
+            "binaryDir": "build/clang-16-ninja-release",
+            "inherits": [
+                "ninja-generator",
+                "release",
+                "clang-16"
+            ]
+        },
+        {
+            "name": "gcc-release",
+            "description": "gcc-12 Release, Ninja",
+            "binaryDir": "build/gcc-12-ninja-release",
+            "inherits": [
+                "ninja-generator",
+                "release",
+                "gcc-12"
+            ]
+        }
+    ]
+}
