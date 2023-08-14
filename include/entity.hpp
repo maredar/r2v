@@ -83,15 +83,28 @@ public:
         if(_top_left == nullptr || _top_right == nullptr || _bot_right == nullptr || _bot_left == nullptr) {
             return false;
         }
-        else if(auto rec_size = size(); _points.size() < 9 || rec_size.x < 3 || rec_size.y < 3) {
+        if(auto rec_size = size(); _points.size() < 9 || rec_size.x < 3 || rec_size.y < 3) {
             return false;
         } 
-        else if(_center.x != (_top_right->x + _bot_left->x) / 2.0 || _center.y != (_top_right->y + _bot_left->y) / 2.0) {
+        if(_top_left->y != 0) {
+            for(int x = _top_left->x; x <= _top_right->x; ++x) {
+                auto found_over_top = _points.find(point_t{ x, _top_left->y - 1 });
+                if(found_over_top != _points.end()) {
+                    return false;
+                }
+            }
+        }
+        if(_bot_right->y != std::numeric_limits<decltype(point_t::y)>::max()) {
+            for(int x = _bot_right->x; x >= _bot_left->x; --x) {
+                auto found_over_bot = _points.find(point_t{ x, _bot_right->y + 1 });
+                if(found_over_bot != _points.end()) {
+                    return false;
+                }
+            }
+        }
+        if(area() != _points.size()) {
             return false;
         }
-        else if(_top_right == _top_left || _bot_right == _bot_left) {
-            return false;
-        } 
         return true;
     }
 
@@ -123,6 +136,12 @@ public:
         auto w = _bot_right->x - _top_left->x + 1;
         auto h = _bot_right->y - _top_left->y + 1;
         return point_t{ w, h };
+    }
+
+private:
+    uint64_t area() const {
+        auto sz = size();
+        return sz.x * sz.y;
     }
 
 private:
